@@ -4,20 +4,20 @@ package com.iosr.search;
 /**
  * Rezultaty zamodelowane analogicznie, jak w google:
  * 
- * Tytu³ strony
- * URL
- * 
+ * Tytul strony (tag title)
+ * URL 
+ * Opis (description z tagu meta)
  * 
  * @author Patrycja
  */
 public class SearchResult {
 	
-	/** Zawartoœæ tagu <title> */
+	/** Zawartosc tagu <title> */
 	private String title;
 	
 	private String url;
 	
-	/** Zawartoœæ <meta name="description", lub jakiœ fragment zawieraj¹cy keyword */
+	/** Zawartosc <meta name="description", lub jakis fragment zawierajacy keyword */
 	private String description;
 	
 	public SearchResult() {

@@ -5,18 +5,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iosr.search.GraphAssociations;
-import com.iosr.search.GraphAssociationsProviderInterface;
+import com.iosr.search.AssociationsGraph;
+import com.iosr.search.AssociationsGraphProviderInterface;
 import com.iosr.search.impl.MockGraphAssociationsProvider;
 
-
+/**
+ * Restowy serwis zwracajacy JSONa z drzewem skojarzen.
+ * 
+ * Na razie zwraca
+ * 
+ * @author Patrycja
+ */
 @RestController
 public class RestGraphController {
 
 	// example host:port/search/rest/graph/x,y,z
 	@RequestMapping(value="/rest/graph/{keywords}", method=RequestMethod.GET)
-	public GraphAssociations getGraphAssociationsData(@PathVariable String[] keywords) {
-		GraphAssociationsProviderInterface gap = new MockGraphAssociationsProvider();
-		return gap.getAssociations();
+	public AssociationsGraph getGraphAssociationsData(@PathVariable String[] keywords) {
+		AssociationsGraphProviderInterface gap = new MockGraphAssociationsProvider();
+		return gap.getAssociations("");
 	}
 }

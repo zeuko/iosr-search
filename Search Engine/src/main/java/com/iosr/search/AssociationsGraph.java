@@ -6,21 +6,20 @@ import com.google.common.collect.Lists;
 
 /**
  * Zwracana przez RestGraphController jako Json. Na dole w komentarzu znajduje
- * sie przykladowy Json oczekiwany przez javascript.
- * 
+ * sie przykladowy Json oczekiwany przez javascript (struktura drzewiasta).
  * 
  * @author Patrycja
  */
-public class GraphAssociations {
+public class AssociationsGraph {
 
 	private String name;
-	private List<GraphAssociations> children = Lists.newArrayList();
+	private List<AssociationsGraph> children = Lists.newArrayList();
 
-	public GraphAssociations(String name) {
+	public AssociationsGraph(String name) {
 		this.name = name;
 	}
 
-	public GraphAssociations(String name, List<GraphAssociations> children) {
+	public AssociationsGraph(String name, List<AssociationsGraph> children) {
 		super();
 		this.name = name;
 		this.children = children;
@@ -34,22 +33,22 @@ public class GraphAssociations {
 		this.name = name;
 	}
 
-	public List<GraphAssociations> getChildren() {
+	public List<AssociationsGraph> getChildren() {
 		return children;
 	}
 
-	public void setChildren(List<GraphAssociations> children) {
+	public void setChildren(List<AssociationsGraph> children) {
 		this.children = children;
 	}
 
-	public void addChild(GraphAssociations child) {
+	public void addChild(AssociationsGraph child) {
 		this.children.add(child);
 	}
 
 }
 
 /*
- * var exampleData = { "name":"rootNode", "children":[ { "name":"child1",
+ * { "name":"rootNode", "children":[ { "name":"child1",
  * "children":[ { "name":"child11", "children":[ { "name":"child111" } ] }, {
  * "name":"child12" }, { "name":"child13" } ] }, { "name":"child2", "children":[
  * { "name":"child21", "children":[ { "name":"child211" } ] }, {

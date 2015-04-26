@@ -22,6 +22,11 @@ import com.iosr.search.keywords.Keyword;
 import com.iosr.search.keywords.KeywordsProvider;
 import com.iosr.search.keywords.MockKeywordProvider;
 
+/**
+ * Kontroler dla strony glownej
+ * 
+ * @author Patrycja
+ */
 @Controller
 public class SearchController {
 
