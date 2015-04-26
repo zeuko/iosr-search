@@ -1,8 +1,6 @@
 package com.iosr.search.controllers;
 
-import java.text.DateFormat;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -25,37 +23,18 @@ import com.iosr.search.keywords.KeywordsProvider;
 import com.iosr.search.keywords.MockKeywordProvider;
 
 @Controller
-public class HomeController {
-	
-	private final class KeywordsToStringFunction implements
-			Function<Keyword, String> {
-		@Override
-		public String apply(Keyword arg0) {
-			return arg0.getBaseWord();
-		}
-	}
+public class SearchController {
 
-	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 	private static final KeywordsProvider keywordsProvider = new MockKeywordProvider();
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
-		model.addAttribute("serverTime", formattedDate );
-		return "home";
+		return "search";
 	}
 
 	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String home2(Locale locale, Model model,  @RequestParam(value="search-input", required=false) String search) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		String formattedDate = dateFormat.format(date);
-		
 		List<Keyword> keywordList = Lists.newArrayList();
 		try {
 			keywordList = keywordsProvider.getKeywords(search);
@@ -70,8 +49,16 @@ public class HomeController {
 		List<SearchResult> results = sei.searchForKeywords(Lists.newArrayList(transform));
 		
 		model.addAttribute("results", results);
-		model.addAttribute("serverTime", formattedDate);
 		
-		return "home";
+		return "search";
+	}
+	
+	
+	private final class KeywordsToStringFunction implements
+			Function<Keyword, String> {
+		@Override
+		public String apply(Keyword arg0) {
+			return arg0.getBaseWord();
+		}
 	}
 }
