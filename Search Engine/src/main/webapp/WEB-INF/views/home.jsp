@@ -14,6 +14,7 @@
 
 <link rel="stylesheet" href="<c:url value="/resources/view/css/foundation.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/view/css/graph.css"/>" />
+<link rel="stylesheet" href="<c:url value="/resources/view/css/search.css"/>" />
 <script type="text/javascript" src="<c:url value="/resources/graph/jquery-1.4.2.min.js"/>"></script>
 
 <script type="text/javascript" src="<c:url value="/resources/view/graph/raphael-min.js"/>"></script>
@@ -107,14 +108,15 @@
 						</div>
 					</div>
 					<div id="search-results">
-						<c:forEach items="${keywords}" var="keyword">
-							${keyword.baseWord}
+						<c:forEach items="${results}" var="result">
+						<div class="result">
+							<a href="${result.url}">${result.title}</a>
+							<div class="link">${result.url}</div>
+							<div class="description">${result.description}</div>
+						</div>
 						</c:forEach>
 					</div> 
 				</form>
-				<h5>The time on the server is ${serverTime}.</h5>
-				<h5>Search result list</h5>
-				<div id="list"></div>
 			</div>
 		</aside>
 
