@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.iosr.search.keywords.Keyword"%>
-<%@ page import="java.util.List" %>
+<%@ page import="java.util.List"%>
 <%@ page session="false"%>
 <!doctype html>
 <html class="no-js" lang="en">
@@ -15,70 +15,12 @@
 <link rel="stylesheet" href="<c:url value="/resources/view/css/foundation.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/view/css/graph.css"/>" />
 <link rel="stylesheet" href="<c:url value="/resources/view/css/search.css"/>" />
-<script type="text/javascript" src="<c:url value="/resources/graph/jquery-1.4.2.min.js"/>"></script>
-
+<script type="text/javascript" src="<c:url value="/resources/view/graph/jquery-1.4.2.min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/view/graph/raphael-min.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/view/graph/dracula_graffle.js"/>"></script>
 <script type="text/javascript" src="<c:url value="/resources/view/graph/dracula_graph.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/view/graph/dracula_algorithms.js"/>"></script>
-<script type="text/javascript" src="<c:url value="/resources/view/graph.js"/>"></script>
-<!-- example data -->
-<script type="text/javascript">
-          var exampleData = {
-              "name":"rootNode",
-              "children":[
-                  {
-                      "name":"child1",
-                      "children":[
-                          {
-                              "name":"child11",
-                              "children":[
-                                  {
-                                      "name":"child111"
-                                  }
-                              ]
-                          },
-                          {
-                              "name":"child12"
-                          },
-                          {
-                              "name":"child13"
-                          }
-                      ]
-                  },
-                  {
-                      "name":"child2",
-                      "children":[
-                          {
-                              "name":"child21",
-                              "children":[
-                                  {
-                                      "name":"child211"
-                                  }
-                              ]
-                          },
-                          {
-                              "name":"child22"
-                          }
-                      ]
-                  },
-                  {
-                      "name":"child3",
-                      "children":[
-                          {
-                              "name":"child31"
-                          }
-                      ]
-                  }
-              ]
-          }
-
-      </script>
-<script src="/resources/view/js/vendor/modernizr.js"></script>
 </head>
 <body>
-
-
 	<div class="row">
 		<div class="large-12 columns">
 			<h1>
@@ -90,64 +32,57 @@
 
 	<div class="row">
 		<div class="large-6 columns" role="content">
-			<div>
-				<button onclick=drawGraph(exampleData)>Load Example Graph</button>
-			</div>
 			<div id="canvas"></div>
-
 		</div>
-
 		<aside class="large-6 columns">
-
 			<div class="panel">
-				<form method="post">
-					<div class="row small-9">
-						<div class="small-9">
-							<input type="text" name="search-input" placeholder="Search input here!">
-							<button type="submit">"Szukaj!"</button>
+				<div>
+					<form method="get">
+						<div class="small-8">
+							<input type="text" name="search-input">
 						</div>
-					</div>
-					<div id="search-results">
-						<c:forEach items="${results}" var="result">
+						<button type="submit">Szukaj!</button>
+					</form>
+				</div>
+				<div id="search-results">
+					<c:forEach items="${results}" var="result">
 						<div class="result">
 							<a href="${result.url}">${result.title}</a>
 							<div class="link">${result.url}</div>
 							<div class="description">${result.description}</div>
 						</div>
-						</c:forEach>
-					</div> 
-				</form>
+					</c:forEach>
+				</div>
+
 			</div>
 		</aside>
-
 	</div>
-
-
 	<footer class="row">
 		<div class="large-12 columns">
 			<hr />
 			<div class="row">
 				<div class="large-6 columns">
-					<p>© Copyright no one at all. Go to town.</p>
-				</div>
-				<div class="large-6 columns">
-					<ul class="inline-list right">
-						<li><a href="#">Link 1</a></li>
-						<li><a href="#">Link 2</a></li>
-						<li><a href="#">Link 3</a></li>
-						<li><a href="#">Link 4?</a></li>
-					</ul>
+					<p>AGH, IOSR 2015</p>
 				</div>
 			</div>
 		</div>
 	</footer>
 
-
-	<script src="<c:url value="/resources/view/js/vendor/jquery.js"/>"></script>
-	<script src="<c:url value="/resources/view/js/foundation.min.js"/>"></script>
+	<script type="text/javascript" src="<c:url value="/resources/view/graph.js"/>"></script>
+	<script src="resources/view/js/vendor/jquery.js"></script>
+	<script src="resources/view/js/foundation.min.js"></script>
 	<script>
-      $(document).foundation();
-  </script>
+		var keywords = new Array();
+		<c:forEach items="${keywords}" var="keyword" varStatus="status"> 
+			var k = "${keyword}";
+			keywords.push(k);
+	    </c:forEach> 
+		$(document).ready(function() {
+			makeGraphRequest(keywords);
+		});
+		
+		$(document).foundation();
+	</script>
 </body>
 </html>
 
