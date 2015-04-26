@@ -12,11 +12,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.iosr.search.keywords.Keyword;
 import com.iosr.search.keywords.KeywordsProvider;
-import com.iosr.search.keywords.TaggerKeywordProvider;
+import com.iosr.search.keywords.MockKeywordProvider;
 
 /**
  * Handles requests for the application home page.
@@ -51,21 +50,18 @@ public class HomeController {
 		
 		Date date = new Date();
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
 		String formattedDate = dateFormat.format(date);
 		
-		
-		KeywordsProvider keywords = new TaggerKeywordProvider();
+		KeywordsProvider keywords = new MockKeywordProvider();
 		
 		System.out.println(search);
 		try {
 			List<Keyword> keywords2 = keywords.getKeywords(search);
 			model.addAttribute("keywords", keywords2);
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		model.addAttribute("serverTime", formattedDate );
+		model.addAttribute("serverTime", formattedDate);
 		
 		return "home";
 	}
