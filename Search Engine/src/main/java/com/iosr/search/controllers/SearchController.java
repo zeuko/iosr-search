@@ -34,16 +34,15 @@ public class SearchController {
 	private static final KeywordsProvider keywordsProvider = new MockKeywordProvider();
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		return "search";
-	}
-
-	@RequestMapping(value = "/", method = RequestMethod.POST)
 	public String home2(Locale locale, Model model,  @RequestParam(value="search-input", required=false) String search) {
+		
+		if (search == null) {
+			return "search";
+		}
+		
 		List<Keyword> keywordList = Lists.newArrayList();
 		try {
 			keywordList = keywordsProvider.getKeywords(search);
-			model.addAttribute("keywords", keywordList);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,12 +51,11 @@ public class SearchController {
 		Collection<String> transform = Collections2.transform(keywordList, new KeywordsToStringFunction());
 		
 		List<SearchResult> results = sei.searchForKeywords(Lists.newArrayList(transform));
-		
+		model.addAttribute("keywords", transform);
 		model.addAttribute("results", results);
 		
 		return "search";
 	}
-	
 	
 	private final class KeywordsToStringFunction implements
 			Function<Keyword, String> {

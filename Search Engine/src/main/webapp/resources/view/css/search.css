@@ -16,7 +16,12 @@
 	color: #007ca6;
 }
 
-
-.result .description {
-		
+input {
+	float:left;	
 }
+
+button {
+	padding-left: 30px;
+	margin-left: 10px;
+}
+

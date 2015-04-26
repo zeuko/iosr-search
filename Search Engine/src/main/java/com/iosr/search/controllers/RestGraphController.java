@@ -12,15 +12,13 @@ import com.iosr.search.impl.MockGraphAssociationsProvider;
 /**
  * Restowy serwis zwracajacy JSONa z drzewem skojarzen.
  * 
- * Na razie zwraca
- * 
  * @author Patrycja
  */
 @RestController
 public class RestGraphController {
 
 	// example host:port/search/rest/graph/x,y,z
-	@RequestMapping(value="/rest/graph/{keywords}", method=RequestMethod.GET)
+	@RequestMapping(value="/rest/graph/{keywords}", method=RequestMethod.GET, produces = "application/json")
 	public AssociationsGraph getGraphAssociationsData(@PathVariable String[] keywords) {
 		AssociationsGraphProviderInterface gap = new MockGraphAssociationsProvider();
 		return gap.getAssociations("");
