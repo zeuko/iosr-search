@@ -6,7 +6,7 @@ function makeGraphRequest(keywords) {
 	
 	$.ajax({
 		// developujac lokanie ten url trzeba zmienic na localhost
-		url : "http://172.17.84.84:8080/search/rest/graph/"+keywords,
+		url : "http://172.17.84.84:8181/search-1.0.0-BUILD-SNAPSHOT/rest/graph/"+keywords,
 		headers : {
 			Accept : "application/json; charset=utf-8",
 		},
