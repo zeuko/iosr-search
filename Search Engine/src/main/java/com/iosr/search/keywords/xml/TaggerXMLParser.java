@@ -55,7 +55,7 @@ public class TaggerXMLParser {
 	}
 
 	private Document getXmlDocument(String xml) {
-		xml = xml.replace("ccl.dtd", "http://localhost:8080/search/resources/ccl.dtd");
+		xml = xml.replace("ccl.dtd", "http://localhost:8080/search/resources/view/ccl.dtd");
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
 		dbf.setValidating(false);
 		dbf.setNamespaceAware(false);

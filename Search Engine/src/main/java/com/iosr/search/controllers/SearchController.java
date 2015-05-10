@@ -21,6 +21,7 @@ import com.iosr.search.impl.MockSearchEngine;
 import com.iosr.search.keywords.Keyword;
 import com.iosr.search.keywords.KeywordsProvider;
 import com.iosr.search.keywords.MockKeywordProvider;
+import com.iosr.search.keywords.TaggerKeywordProvider;
 
 /**
  * Kontroler dla strony glownej
@@ -31,7 +32,7 @@ import com.iosr.search.keywords.MockKeywordProvider;
 public class SearchController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
-	private static final KeywordsProvider keywordsProvider = new MockKeywordProvider();
+	private static final KeywordsProvider keywordsProvider = new TaggerKeywordProvider();
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home2(Locale locale, Model model,  @RequestParam(value="search-input", required=false) String search) {
