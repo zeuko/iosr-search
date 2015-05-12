@@ -1,11 +1,22 @@
-package com.impl.browse;
+package com.iosr.search.impl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
 //import org.apache.solr.client.solrj.impl.StreamingUpdateSolrServer;
 import org.apache.solr.client.solrj.impl.HttpSolrServer;
-import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.impl.XMLResponseParser;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrDocumentList;
 import org.apache.solr.common.SolrInputDocument;
 import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
@@ -13,21 +24,10 @@ import org.apache.tika.parser.ParseContext;
 import org.apache.tika.sax.BodyContentHandler;
 import org.xml.sax.ContentHandler;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Scanner;
-import org.apache.solr.client.solrj.SolrQuery;
-import org.apache.solr.client.solrj.response.QueryResponse;
-import org.apache.solr.common.SolrDocumentList;
+import com.iosr.search.SearchEngineInterface;
+import com.iosr.search.SearchResult;
 
-import java.net.MalformedURLException;
-
-public class Parse {
+public class SearchEngine implements SearchEngineInterface{
   private HttpSolrServer server;
   private long _start = System.currentTimeMillis();
   private AutoDetectParser parse;
@@ -35,22 +35,13 @@ public class Parse {
 
   private Collection documents = new ArrayList();
 
-  public static void main(String[] args) throws MalformedURLException, SolrServerException {
-    try {
-      Parse searcher = new Parse("http://localhost:8961/solr");
-
-      searcher.errorCheck(new File("/home/raf/pages"));
-      searcher.indStats();
-      searcher.searchquery();
-      
-      
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
+  public SearchEngine() throws IOException, SolrServerException{
+	  this("http://localhost:8961/solr");
   }
-
-  private Parse(String url) throws IOException, SolrServerException {
-      
+  
+  private SearchEngine(String url) throws IOException, SolrServerException {
+     errorCheck(new File("/home/raf/pages"));
+     indStats();
     server = new HttpSolrServer(url);
     server.deleteByQuery( "*:*" );
     server.setSoTimeout(2000);  
@@ -71,23 +62,25 @@ public class Parse {
          " milliseconds to index " + files + " documents");
   }
   
-  private void searchquery() throws IOException, SolrServerException, MalformedURLException {
+  private List<SearchResult> searchquery(String keyword) throws IOException, SolrServerException, MalformedURLException {
 	  SolrQuery query = new SolrQuery();
-	  String keyword;
-	  System.out.println("Keyword: ");
-	  Scanner rd = new Scanner(System.in);
-	  keyword = rd.nextLine();
 	  query.setQuery(keyword);
 	  //query.setQuery("tomaszewski");  //// nasze zapytanie
       QueryResponse response = server.query(query);
       SolrDocumentList results = response.getResults();
-      
-      System.out.println("Search results:");
+      List<SearchResult> searchResults = new ArrayList<SearchResult>();
       for (int i = 0; i < results.size(); ++i) {
     	  int index=i+1;
     	  System.out.print(index+":");
     	  System.out.println(results.get(i));
+    	  SearchResult searchResult = new SearchResult();
+    	  searchResult.setTitle(results.get(i).toString());
+    	  searchResult.setDescription(Integer.toString(results.get(i).size()));
+    	  searchResult.setUrl(results.get(i).getFieldNames().toString());
+    	  searchResults.add(searchResult);
+    	  
       }
+      return searchResults;
 	  }
 
   private static void log(String msg) {
@@ -141,5 +134,39 @@ public class Parse {
      // log(name + ":" + metadata.get(name));
     //}
     //log("\n\n");
-  } 
+  }
+
+@Override
+public List<SearchResult> searchForKeyword(String keyword) {
+	try {
+		return searchquery(keyword);
+	} catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SolrServerException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+}
+
+@Override
+public List<SearchResult> searchForKeywords(List<String> keywords) {
+	try {
+		return searchquery(keywords.toString().split(",").toString());
+	} catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (SolrServerException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	return null;
+} 
 }
