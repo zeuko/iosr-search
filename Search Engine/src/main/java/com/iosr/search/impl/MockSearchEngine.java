@@ -32,7 +32,7 @@ public class MockSearchEngine implements SearchEngineInterface {
 		for (int i = 0; i < 10; i++) {
 			SearchResult sr = new SearchResult();
 			sr.setUrl("http://olx.pl/nieruchomosci/mieszkania/wynajem/krakow/");
-			sr.setDescription("TEST 2Mieszkania do wynajecia na OLX.pl (dawniej Tablica.pl) Krakow, oferty bezposrednie i od agencji nieruchomosci. Mieszkanie wynajme Krakow - sprawdz nasze ogloszenia.");
+			sr.setDescription("TEST 22 Mieszkania do wynajecia na OLX.pl (dawniej Tablica.pl) Krakow, oferty bezposrednie i od agencji nieruchomosci. Mieszkanie wynajme Krakow - sprawdz nasze ogloszenia.");
 			sr.setTitle("Tablica Ogloszen OLX.pl - Mieszkania na wynajem Krakow, mieszkania do wynajecia Krakow");
 			list.add(sr);
 		}
