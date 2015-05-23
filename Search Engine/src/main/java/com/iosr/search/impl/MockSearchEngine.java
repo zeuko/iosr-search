@@ -19,8 +19,8 @@ public class MockSearchEngine implements SearchEngineInterface {
 		for (int i = 0; i < 10; i++) {
 			SearchResult sr = new SearchResult();
 			sr.setUrl("http://olx.pl/nieruchomosci/mieszkania/wynajem/krakow/");
-			sr.setDescription("Mieszkania do wynajêcia na OLX.pl (dawniej Tablica.pl) Kraków, oferty bezpoœrednie i od agencji nieruchomoœci. Mieszkanie wynajmê Kraków - sprawdŸ nasze og³oszenia.");
-			sr.setTitle("Tablica Og³oszeñ OLX.pl - Mieszkania na wynajem Kraków, mieszkania do wynajêcia Kraków");
+			sr.setDescription("Mieszkania do wynajecia na OLX.pl (dawniej Tablica.pl) Krakow, oferty bezposrednie i od agencji nieruchomosci. Mieszkanie wynajme Krakow - sprawdz nasze ogloszenia.");
+			sr.setTitle("TEST 23 Tablica Ogloszen OLX.pl - Mieszkania na wynajem Krakow, mieszkania do wynajecia Krakow");
 			list.add(sr);
 		}
 		return list;
@@ -32,8 +32,8 @@ public class MockSearchEngine implements SearchEngineInterface {
 		for (int i = 0; i < 10; i++) {
 			SearchResult sr = new SearchResult();
 			sr.setUrl("http://olx.pl/nieruchomosci/mieszkania/wynajem/krakow/");
-			sr.setDescription("Mieszkania do wynajêcia na OLX.pl (dawniej Tablica.pl) Kraków, oferty bezpoœrednie i od agencji nieruchomoœci. Mieszkanie wynajmê Kraków - sprawdŸ nasze og³oszenia.");
-			sr.setTitle("Tablica Og³oszeñ OLX.pl - Mieszkania na wynajem Kraków, mieszkania do wynajêcia Kraków");
+			sr.setDescription("Done 22 Mieszkania do wynajecia na OLX.pl (dawniej Tablica.pl) Krakow, oferty bezposrednie i od agencji nieruchomosci. Mieszkanie wynajme Krakow - sprawdz nasze ogloszenia.");
+			sr.setTitle("Tablica Ogloszen OLX.pl - Mieszkania na wynajem Krakow, mieszkania do wynajecia Krakow");
 			list.add(sr);
 		}
 		return list;

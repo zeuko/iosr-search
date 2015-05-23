@@ -17,7 +17,7 @@ public class MockGraphAssociationsProvider implements AssociationsGraphProviderI
 	public AssociationsGraph getAssociations(String keyword) {
 		AssociationsGraph ga = new AssociationsGraph("wynajem");
 		AssociationsGraph child1 = new AssociationsGraph("kupno");
-		AssociationsGraph child2 = new AssociationsGraph("dzier¿awa");
+		AssociationsGraph child2 = new AssociationsGraph("dzierzawa");
 		AssociationsGraph child3 = new AssociationsGraph("mieszkanie");
 		AssociationsGraph child4 = new AssociationsGraph("lokal");
 		ga.setChildren(Lists.newArrayList(child1, child2, child3, child4));

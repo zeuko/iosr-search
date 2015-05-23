@@ -10,7 +10,7 @@ public class MockKeywordProvider implements KeywordsProvider {
 	public List<Keyword> getKeywords(String string) throws Exception {
 		
 		Keyword k1 = new Keyword();
-		k1.setBaseWord("Kraków");
+		k1.setBaseWord("Krakow");
 		
 		Keyword k2 = new Keyword();
 		k2.setBaseWord("mieszkanie");
