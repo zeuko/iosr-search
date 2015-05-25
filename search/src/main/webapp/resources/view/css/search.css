@@ -1,0 +1,27 @@
+.result {
+	margin-bottom: 10px;
+}
+
+.result a {
+    color: #9A3555;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.result a:hover {
+    text-decoration: underline;
+}
+
+.result .link {
+	color: #007ca6;
+}
+
+input {
+	float:left;	
+}
+
+button {
+	padding-left: 30px;
+	margin-left: 10px;
+}
+
