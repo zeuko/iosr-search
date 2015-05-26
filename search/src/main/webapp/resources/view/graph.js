@@ -6,7 +6,7 @@ function makeGraphRequest(keywords) {
 	
 	$.ajax({
 		// developujac lokanie ten url trzeba zmienic na localhost
-		url : "http://172.17.84.84:8181/search-1.0.0-BUILD-SNAPSHOT/rest/graph/"+keywords,
+		url : "http://localhost:8080/search/rest/graph/"+keywords,
 		headers : {
 			Accept : "application/json; charset=utf-8",
 		},
@@ -31,7 +31,7 @@ function drawGraph(graphData) {
 	var layouter = new Graph.Layout.Spring(g);
 	var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
 	$("ellipse").each(function() {
-		$(this).attr("onclick", "clickCallback($(this).attr('id'))")
+		$(this.node).attr("onclick", clickCallback($(this).attr('id')))
 	});
 }
 
@@ -49,5 +49,6 @@ function drawChildren(g, node) {
 
 function clickCallback(nodeName) {
 	$("#list").append("<p> Clicked node: " + nodeName + "</p>")
+
 }
 

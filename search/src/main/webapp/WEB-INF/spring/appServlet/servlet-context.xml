@@ -43,6 +43,11 @@
 	<beans:bean id="searchEngine"
 		class="com.iosr.search.impl.SearchEngine">
 	</beans:bean>
+	
+			<!-- Associations  Engine bean-->
+	<beans:bean id="associationsEngine"
+		class="com.iosr.search.impl.AssociationsEngine">
+	</beans:bean>
 
 
 </beans:beans>

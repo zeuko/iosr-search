@@ -1,4 +1,4 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+ <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="com.iosr.search.keywords.Keyword"%>
@@ -67,7 +67,6 @@
 			</div>
 		</div>
 	</footer>
-
 	<script type="text/javascript" src="<c:url value="/resources/view/graph.js"/>"></script>
 	<script src="resources/view/js/vendor/jquery.js"></script>
 	<script src="resources/view/js/foundation.min.js"></script>
@@ -77,6 +76,7 @@
 			var k = "${keyword}";
 			keywords.push(k);
 	    </c:forEach> 
+
 		$(document).ready(function() {
 			makeGraphRequest(keywords);
 		});

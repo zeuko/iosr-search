@@ -80,9 +80,11 @@ public class SearchEngine implements SearchEngineInterface{
     	  System.out.println("Keyset:" + results.get(i).keySet());
     	  System.out.println("Values:" +results.get(i).values());
     	  SearchResult searchResult = new SearchResult();
-    	  searchResult.setTitle(results.get(i).toString());
-    	  searchResult.setDescription((String)results.get(i).getFieldValue("text"));
-    	  searchResult.setUrl(results.get(i).getFieldNames().toString());
+    	  searchResult.setTitle((String)results.get(i).getFieldValue("title"));
+    	  if(((String)results.get(i).getFieldValue("description")).substring(0,300).split("&&&&").length>2){
+    	  searchResult.setDescription(((String)results.get(i).getFieldValue("description")).substring(0,300).split("&&&&")[2]);
+    	  }
+    	  searchResult.setUrl(((String)results.get(i).getFieldValue("description")).split("&&&&")[1]);
     	  searchResults.add(searchResult);
     	  
       }
@@ -122,7 +124,14 @@ public class SearchEngine implements SearchEngineInterface{
       if (author != null) {
         doc.addField("author", author,(float)1.);
       }
-      doc.addField("text", textHandler.toString(),(float)1.);
+      
+      String title = metadata.get("title");
+      if (title == null) {
+    	  continue;
+        }
+      doc.addField("title", title,(float)1.);
+
+      doc.addField("description", textHandler.toString(),(float)1.);
       documents.add(doc);
       
       ++files;
