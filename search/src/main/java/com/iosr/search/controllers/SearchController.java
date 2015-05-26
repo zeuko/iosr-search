@@ -1,13 +1,9 @@
 package com.iosr.search.controllers;
 
-import java.io.IOException;
 import java.util.Collection;
 import java.util.List;
 import java.util.Locale;
 
-import javax.annotation.PostConstruct;
-
-import org.apache.solr.client.solrj.SolrServerException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +18,6 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.iosr.search.SearchEngineInterface;
 import com.iosr.search.SearchResult;
-import com.iosr.search.impl.SearchEngine;
 import com.iosr.search.keywords.Keyword;
 import com.iosr.search.keywords.KeywordsProvider;
 import com.iosr.search.keywords.TaggerKeywordProvider;
