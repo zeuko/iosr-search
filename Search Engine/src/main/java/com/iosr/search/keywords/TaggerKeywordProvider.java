@@ -4,6 +4,8 @@ import java.util.List;
 
 import com.iosr.search.keywords.xml.TaggerXMLParser;
 
+import eu.clarin_pl.ws.wsg.tagger.CheckStatusRequestType;
+import eu.clarin_pl.ws.wsg.tagger.CheckStatusResponseType;
 import eu.clarin_pl.ws.wsg.tagger.GetResultRequestType;
 import eu.clarin_pl.ws.wsg.tagger.GetResultResponseType;
 import eu.clarin_pl.ws.wsg.tagger.SendRequestRequestType;
@@ -20,10 +22,16 @@ public class TaggerKeywordProvider implements KeywordsProvider {
 		SendRequestRequestType parameters = new SendRequestRequestType(string);
 		SendRequestResponseType sendRequest = service.sendRequest(parameters);
 		String token = sendRequest.getToken();
-		Thread.sleep(1000);
+		CheckStatusRequestType status = new CheckStatusRequestType(token);
+		CheckStatusResponseType checkStatus = service.checkStatus(status);
+		
+		while(!checkStatus.getStatus().equals("READY")) {
+			checkStatus = service.checkStatus(status);
+		}
+		
 		GetResultRequestType params = new GetResultRequestType(token);
 		GetResultResponseType result = service.getResult(params);
-		System.out.println(result.getXml());
+
 		TaggerXMLParser parser = new TaggerXMLParser();
 		return parser.extractKeywords(result.getXml());
 
