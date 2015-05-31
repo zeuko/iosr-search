@@ -18,10 +18,8 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.iosr.search.SearchEngineInterface;
 import com.iosr.search.SearchResult;
-import com.iosr.search.keywords.DeclinationService;
 import com.iosr.search.keywords.Keyword;
 import com.iosr.search.keywords.KeywordsProviderInterface;
-import com.iosr.search.keywords.impl.TaggerKeywordProvider;
 
 /**
  * Kontroler dla strony glownej
