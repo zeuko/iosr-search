@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.google.common.base.Joiner;
-import com.iosr.search.AssociationsGraph;
+import com.iosr.search.AssociationsGraphNode;
 import com.iosr.search.AssociationsGraphProviderInterface;
 
 public class AssociationsEngine implements AssociationsGraphProviderInterface {
@@ -90,8 +90,8 @@ public class AssociationsEngine implements AssociationsGraphProviderInterface {
 	}
 
 	@Override
-	public AssociationsGraph getAssociations(String keyword) {
-		AssociationsGraph child = new AssociationsGraph(keyword);
+	public AssociationsGraphNode getAssociations(String keyword) {
+		AssociationsGraphNode child = new AssociationsGraphNode(keyword);
 		System.out.println("KEYWORD !!" + keyword);
 		System.out.println("1"+getSynonims(keyword));
 		System.out.println("2"+getSynonims(keyword));
@@ -102,17 +102,17 @@ public class AssociationsEngine implements AssociationsGraphProviderInterface {
 			System.out.println(getSynonims(keyword));
 			for (String s : getSynonims(keyword)) {
 				System.out.println("Grand - Child:" + s);
-				child.addChild(new AssociationsGraph(s));
+				child.addChild(new AssociationsGraphNode(s));
 			}
 		}
 		return child;
 	}
 
 	@Override
-	public List<AssociationsGraph> getAssociations(List<String> keywords) {
-		List<AssociationsGraph> list = new ArrayList<AssociationsGraph>();
+	public List<AssociationsGraphNode> getAssociations(List<String> keywords) {
+		List<AssociationsGraphNode> list = new ArrayList<AssociationsGraphNode>();
 		for (int i = 0; i < keywords.size(); i++) {
-			AssociationsGraph child = getAssociations(keywords.get(i));
+			AssociationsGraphNode child = getAssociations(keywords.get(i));
 
 			list.add(child);
 		}
@@ -120,20 +120,20 @@ public class AssociationsEngine implements AssociationsGraphProviderInterface {
 	}
 
 	@Override
-	public AssociationsGraph getCommonAssociations(List<String> keywords) {
+	public AssociationsGraphNode getCommonAssociations(List<String> keywords) {
 		if (keywords != null && !keywords.isEmpty()) {
-			AssociationsGraph ag = getAssociations(keywords.get(0));
+			AssociationsGraphNode ag = getAssociations(keywords.get(0));
 			System.out.println("Mother:" + keywords.get(0));
 			for (int i = 1; i < keywords.size(); i++) {
 				System.out.println("Child:" + keywords.get(i));
 
-				AssociationsGraph child = getAssociations(keywords.get(i));
+				AssociationsGraphNode child = getAssociations(keywords.get(i));
 				ag.addChild(child);
 			}
 
 			return ag;
 		}
-		return new AssociationsGraph("NO RESULTS");
+		return new AssociationsGraphNode("NO RESULTS");
 	}
 
 }

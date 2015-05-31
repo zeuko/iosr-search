@@ -18,9 +18,10 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.iosr.search.SearchEngineInterface;
 import com.iosr.search.SearchResult;
+import com.iosr.search.keywords.DeclinationService;
 import com.iosr.search.keywords.Keyword;
-import com.iosr.search.keywords.KeywordsProvider;
-import com.iosr.search.keywords.TaggerKeywordProvider;
+import com.iosr.search.keywords.KeywordsProviderInterface;
+import com.iosr.search.keywords.impl.TaggerKeywordProvider;
 
 /**
  * Kontroler dla strony glownej
@@ -31,11 +32,12 @@ import com.iosr.search.keywords.TaggerKeywordProvider;
 public class SearchController {
 
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
-	private static final KeywordsProvider keywordsProvider = new TaggerKeywordProvider();
 	
 	@Autowired
 	SearchEngineInterface searchEngine;
 
+	@Autowired
+	KeywordsProviderInterface keywordsProvider;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home2(Locale locale, Model model,  @RequestParam(value="search-input", required=false) String search) {
@@ -60,11 +62,10 @@ public class SearchController {
 		return "search";
 	}
 	
-	private final class KeywordsToStringFunction implements
-			Function<Keyword, String> {
+	private final class KeywordsToStringFunction implements 	Function<Keyword, String> {
 		@Override
-		public String apply(Keyword arg0) {
-			return arg0.getBaseWord();
+		public String apply(Keyword keyword) {
+			return keyword.getBaseWord();
 		}
 	}
 }

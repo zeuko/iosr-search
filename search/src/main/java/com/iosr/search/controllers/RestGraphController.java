@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iosr.search.AssociationsGraph;
+import com.iosr.search.AssociationsGraphNode;
 import com.iosr.search.AssociationsGraphProviderInterface;
 import com.iosr.search.impl.AssociationsEngine;
 
@@ -25,7 +25,7 @@ public class RestGraphController {
 	
 	// example host:port/search/rest/graph/x,y,z
 	@RequestMapping(value="/rest/graph/{keywords}", method=RequestMethod.GET, produces = "application/json")
-	public AssociationsGraph getGraphAssociationsData(@PathVariable String[] keywords) {
+	public AssociationsGraphNode getGraphAssociationsData(@PathVariable String[] keywords) {
 		System.out.print("KEYWORDS" + Arrays.asList(keywords).toString());
 		return associationsEngine.getCommonAssociations(Arrays.asList(keywords));
 	}

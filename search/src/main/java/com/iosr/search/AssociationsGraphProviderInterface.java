@@ -14,13 +14,13 @@ public interface AssociationsGraphProviderInterface {
 	/**
 	 * Implementacja tej metody zwraca graf skojarzen dla jednego, podanego slowa kluczowego. 
 	 */
-	public AssociationsGraph getAssociations(String keyword);
+	public AssociationsGraphNode getAssociations(String keyword);
 	
 	
 	/**
 	 * Implementacja tej metody zwraca grafy skojarzen odpowiednio dla wszystkich podanych slow kluczowych. 
 	 */
-	public List<AssociationsGraph> getAssociations(List<String> keywords);
+	public List<AssociationsGraphNode> getAssociations(List<String> keywords);
 	
 	
 	/**
@@ -28,6 +28,6 @@ public interface AssociationsGraphProviderInterface {
 	 * Jako rootName w grafie znajduja sie wszystkie slowa kluczowe.
 	 * uwaga -  niewiadomo czy to wykonalne 
 	 */
-	public AssociationsGraph getCommonAssociations(List<String> keywords);
+	public AssociationsGraphNode getCommonAssociations(List<String> keywords);
 	
 }
