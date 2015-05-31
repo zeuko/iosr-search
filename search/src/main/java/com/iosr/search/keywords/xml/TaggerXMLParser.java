@@ -34,7 +34,6 @@ public class TaggerXMLParser {
 			String orth = getTagContent(item, "orth"); 
 			String base = getTagContent(item, "base"); 
 			Keyword keyword = new Keyword();
-			keyword.setWord(orth);
 			keyword.setBaseWord(base);
 			list.add(keyword);
 		}
