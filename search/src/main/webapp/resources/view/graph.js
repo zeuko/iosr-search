@@ -31,7 +31,7 @@ function drawGraph(graphData) {
 	var layouter = new Graph.Layout.Spring(g);
 	var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
 	$("ellipse").each(function() {
-		$(this.node).attr("onclick", clickCallback($(this).attr('id')))
+		this.addEventListener("click", function() { clickCallback(g, $(this).attr('id'))});
 	});
 }
 
@@ -47,8 +47,8 @@ function drawChildren(g, node) {
 	}
 }
 
-function clickCallback(nodeName) {
-	$("#list").append("<p> Clicked node: " + nodeName + "</p>")
-
+function clickCallback(graph, nodeName) {
+	console.log("Clicked node: " + nodeName);
+	window.location.replace(window.location.href + "+" + nodeName);
 }
 
