@@ -32,7 +32,7 @@ import com.iosr.search.controllers.SearchController;
 
 public class SearchEngine implements SearchEngineInterface {
 	
-	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+	private static final Logger logger = LoggerFactory.getLogger(SearchEngine.class);
 	
 	private HttpSolrServer server;
 	private long _start = System.currentTimeMillis();

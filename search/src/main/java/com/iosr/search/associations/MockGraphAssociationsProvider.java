@@ -1,17 +1,15 @@
-package com.iosr.search.impl;
+package com.iosr.search.associations;
 
 import java.util.List;
 
 import com.google.common.collect.Lists;
-import com.iosr.search.AssociationsGraphNode;
-import com.iosr.search.AssociationsGraphProviderInterface;
 
 
 /**
- * Implementacja 'dummy'dla celow testowych.
+ * Mock implementation for test purpose.
  * @author Patrycja
  */
-public class MockGraphAssociationsProvider implements AssociationsGraphProviderInterface {
+public class MockGraphAssociationsProvider implements AssociationsEngineInterface {
 
 	@Override
 	public AssociationsGraphNode getAssociations(String keyword) {

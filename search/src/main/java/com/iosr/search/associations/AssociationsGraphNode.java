@@ -1,4 +1,4 @@
-package com.iosr.search;
+package com.iosr.search.associations;
 
 import java.util.List;
 

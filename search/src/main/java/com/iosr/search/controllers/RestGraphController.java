@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.iosr.search.AssociationsGraphNode;
-import com.iosr.search.AssociationsGraphProviderInterface;
-import com.iosr.search.impl.AssociationsEngine;
+import com.iosr.search.associations.AssociationsEngine;
+import com.iosr.search.associations.AssociationsGraphNode;
+import com.iosr.search.associations.AssociationsEngineInterface;
 
 /**
  * Restowy serwis zwracajacy JSONa z drzewem skojarzen.
