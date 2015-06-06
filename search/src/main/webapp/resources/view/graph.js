@@ -3,10 +3,11 @@ function makeGraphRequest(keywords) {
 	if (keywords == undefined || keywords == "") {
 		return;
 	}
-	
+
 	$.ajax({
-		// developujac lokanie ten url trzeba zmienic na localhost 172.17.84.84:8181/search-1.0.0-BUILD-SNAPSHOT/
-		url : "http://localhost:8080/search/rest/graph/"+keywords,
+		// developujac lokanie ten url trzeba zmienic na localhost
+		// 172.17.84.84:8181/search-1.0.0-BUILD-SNAPSHOT/
+		url : "http://localhost:8080/search/rest/graph/" + keywords,
 		headers : {
 			Accept : "application/json; charset=utf-8",
 		},
@@ -30,8 +31,20 @@ function drawGraph(graphData) {
 
 	var layouter = new Graph.Layout.Spring(g);
 	var renderer = new Graph.Renderer.Raphael('canvas', g, width, height);
+
 	$("ellipse").each(function() {
-		this.addEventListener("click", function() { clickCallback(g, $(this).attr('id'))});
+		var flag = 0;
+		this.addEventListener("mousedown", function() {
+			flag = 0;
+		}, false);
+		this.addEventListener("mousemove", function() {
+			flag = 1;
+		}, false);
+		this.addEventListener("mouseup", function() {
+			if (flag === 0) {
+				clickCallback(g, $(this).attr('id'))
+			}
+		}, false);
 	});
 }
 
@@ -51,4 +64,3 @@ function clickCallback(graph, nodeName) {
 	console.log("Clicked node: " + nodeName);
 	window.location.replace(window.location.href + "+" + nodeName);
 }
-
