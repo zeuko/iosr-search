@@ -2,7 +2,6 @@ package com.iosr.search.controllers;
 
 import java.util.Collection;
 import java.util.List;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,14 +31,15 @@ public class SearchController {
 	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
 	
 	@Autowired
-	SearchEngineInterface searchEngine;
+	private SearchEngineInterface searchEngine;
 
 	@Autowired
-	KeywordsProviderInterface keywordsProvider;
+	private KeywordsProviderInterface keywordsProvider;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home2(Locale locale, Model model,  @RequestParam(value="search-input", required=false) String search) {
+	public String handleHomePageRequest(Model model, @RequestParam(value="search-input", required=false) String search) {
 		
+		logger.info("Request to \"/search\"" + (search == null ? "." : " with phrase: "+ search + "."));
 		if (search == null) {
 			return "search";
 		}
@@ -48,7 +48,8 @@ public class SearchController {
 		try {
 			keywordList = keywordsProvider.getKeywords(search);
 		} catch (Exception e) {
-			e.printStackTrace();
+			logger.error("Keywords service exception for phrase: "+search, e);
+			return "error"; // TODO - add error page
 		}
 
 		Collection<String> transform = Collections2.transform(keywordList, new KeywordsToStringFunction());
@@ -60,7 +61,7 @@ public class SearchController {
 		return "search";
 	}
 	
-	private final class KeywordsToStringFunction implements 	Function<Keyword, String> {
+	private final class KeywordsToStringFunction implements Function<Keyword, String> {
 		@Override
 		public String apply(Keyword keyword) {
 			return keyword.getBaseWord();
