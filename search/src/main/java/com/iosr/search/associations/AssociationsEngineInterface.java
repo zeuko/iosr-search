@@ -1,4 +1,4 @@
-package com.iosr.search;
+package com.iosr.search.associations;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import java.util.List;
  * 
  * @author Patrycja
  */
-public interface AssociationsGraphProviderInterface {
+public interface AssociationsEngineInterface {
 
 	/**
 	 * Implementacja tej metody zwraca graf skojarzen dla jednego, podanego slowa kluczowego. 

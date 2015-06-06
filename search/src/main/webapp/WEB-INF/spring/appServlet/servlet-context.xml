@@ -40,11 +40,13 @@
 	<beans:bean id="searchEngine" class="com.iosr.search.impl.SearchEngine"/>
 
 	<!-- Associations Engine bean -->
-	<beans:bean id="associationsEngine" class="com.iosr.search.impl.AssociationsEngine"/>
+	<beans:bean id="associationsEngine" class="com.iosr.search.associations.AssociationsEngine"/>
+
+	<!-- Synonym Service bean (database logic) -->
+	<beans:bean id="synonymService" class="com.iosr.search.associations.database.SynonymService"/>
 
 	<!-- Keywords Provider -->
-	<beans:bean id="keywordsProvider" class="com.iosr.search.keywords.impl.FileBasedKeywordProvider">
-	</beans:bean>
+	<beans:bean id="keywordsProvider" class="com.iosr.search.keywords.impl.FileBasedKeywordProvider"/>
 
 	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <beans:property name="location" value="/WEB-INF/app.properties"/>
