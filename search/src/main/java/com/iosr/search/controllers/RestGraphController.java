@@ -29,9 +29,5 @@ public class RestGraphController {
 		System.out.print("KEYWORDS" + Arrays.asList(keywords).toString());
 		return associationsEngine.getCommonAssociations(Arrays.asList(keywords));
 	}
-//	@RequestMapping(value="/rest/graph/{keyword}", method=RequestMethod.GET, produces = "application/json")
-//	public AssociationsGraph getGraphAssociationsData(@PathVariable String keyword) {
-//		
-//		return associationsEngine.getAssociations(keyword);
-//	}
+	
 }

@@ -22,12 +22,18 @@ import org.apache.tika.metadata.Metadata;
 import org.apache.tika.parser.AutoDetectParser;
 import org.apache.tika.parser.ParseContext;
 import org.apache.tika.sax.BodyContentHandler;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.ContentHandler;
 
 import com.iosr.search.SearchEngineInterface;
 import com.iosr.search.SearchResult;
+import com.iosr.search.controllers.SearchController;
 
 public class SearchEngine implements SearchEngineInterface {
+	
+	private static final Logger logger = LoggerFactory.getLogger(SearchController.class);
+	
 	private HttpSolrServer server;
 	private long _start = System.currentTimeMillis();
 	private AutoDetectParser parse;
@@ -94,7 +100,7 @@ public class SearchEngine implements SearchEngineInterface {
 	}
 
 	private static void log(String msg) {
-		System.out.println(msg);
+		logger.info(msg);
 	}
 
 	private void errorCheck(File root) throws IOException, SolrServerException {
@@ -115,7 +121,6 @@ public class SearchEngine implements SearchEngineInterface {
 				parse.parse(input, textHandler, metadata, context);
 			} catch (Exception e) {
 				log(String.format("Fail: %s", file.getCanonicalPath()));
-				// e.printStackTrace();
 				continue;
 			}
 			dumpMetadata(file.getCanonicalPath(), metadata);
