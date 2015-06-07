@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.solr.client.solrj.SolrQuery;
@@ -28,35 +29,33 @@ import org.xml.sax.ContentHandler;
 
 import com.iosr.search.SearchEngineInterface;
 import com.iosr.search.SearchResult;
-import com.iosr.search.controllers.SearchController;
 
 public class SearchEngine implements SearchEngineInterface {
-	
+
 	private static final Logger logger = LoggerFactory.getLogger(SearchEngine.class);
-	
+
+	/** Injected in bean configuration */
+	private String pagesDirectory;
+
 	private HttpSolrServer server;
-	private long _start = System.currentTimeMillis();
 	private AutoDetectParser parse;
+	private Collection<SolrInputDocument> documents = new ArrayList<>();
 	private int files = 0;
 
-	private Collection documents = new ArrayList();
-
-	public SearchEngine() throws IOException, SolrServerException {
-		this("http://localhost:8983/solr");
-	}
-
-	private SearchEngine(String url) throws IOException, SolrServerException {
-		server = new HttpSolrServer(url);
-
+	public SearchEngine(String solrUrl, String pagesDirectory) throws IOException, SolrServerException {
+		this.pagesDirectory = pagesDirectory;
+		long startTime = System.currentTimeMillis();
+		server = new HttpSolrServer(solrUrl);
 		server.deleteByQuery("*:*");
 		server.setSoTimeout(20000);
 		server.setConnectionTimeout(20000);
 		server.setMaxRetries(1);
 		server.setParser(new XMLResponseParser());
 		parse = new AutoDetectParser();
-		errorCheck(new File("c:\\pages"));
+		errorCheck(new File(this.pagesDirectory));
 		indStats();
-
+		long endTime = System.currentTimeMillis();
+		log("Time: " + (endTime - startTime) + " milliseconds to index " + files + " documents");
 	}
 
 	private void indStats() throws IOException, SolrServerException {
@@ -64,9 +63,6 @@ public class SearchEngine implements SearchEngineInterface {
 			server.add(documents, 400000);
 		}
 		server.commit();
-
-		long endTime = System.currentTimeMillis();
-		log("Time: " + (endTime - _start) + " milliseconds to index " + files + " documents");
 	}
 
 	private List<SearchResult> searchQuery(String keywords) throws IOException, SolrServerException,
@@ -123,21 +119,17 @@ public class SearchEngine implements SearchEngineInterface {
 				log(String.format("Fail: %s", file.getCanonicalPath()));
 				continue;
 			}
-			dumpMetadata(file.getCanonicalPath(), metadata);
 			SolrInputDocument doc = new SolrInputDocument();
 			doc.addField("id", file.getCanonicalPath());
 			String author = metadata.get("Author");
-
 			if (author != null) {
 				doc.addField("author", author, (float) 1.);
 			}
-
 			String title = metadata.get("title");
 			if (title == null) {
 				continue;
 			}
 			doc.addField("title", title, (float) 1.);
-
 			doc.addField("description", textHandler.toString(), (float) 1.);
 			documents.add(doc);
 
@@ -145,21 +137,13 @@ public class SearchEngine implements SearchEngineInterface {
 			if (documents.size() >= 10000) {
 				UpdateResponse resp = server.add(documents, 300000);
 				if (resp.getStatus() != 0) {
-					log("Error has occurred, status: " + resp.getStatus());
+					logger.error("Error has occurred, status: " + resp.getStatus());
 				}
 				documents.clear();
 			}
 		}
-		System.out.println("Count read files : " + countGood);
+		log("Count read files : " + countGood);
 
-	}
-
-	private void dumpMetadata(String fileName, Metadata metadata) {
-		// log("Dumping metadata for file: " + fileName);
-		// for (String name : metadata.names()) {
-		// log(name + ":" + metadata.get(name));
-		// }
-		// log("\n\n");
 	}
 
 	@Override
@@ -167,40 +151,39 @@ public class SearchEngine implements SearchEngineInterface {
 		try {
 			return searchQuery(keyword);
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SearchEngine error.", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SearchEngine error.", e);
 		} catch (SolrServerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SearchEngine error.", e);
 		}
 		return null;
 	}
 
 	@Override
 	public List<SearchResult> searchForKeywords(List<String> keywords) {
+		if (keywords == null || keywords.isEmpty()) {
+			log("No keywords provided for search");
+			return Collections.emptyList();
+		}
+
 		try {
 			StringBuilder searchString = new StringBuilder();
 
 			for (String string : keywords) {
 				searchString.append(string);
 				searchString.append(" ");
-
 			}
-			System.out.println("Keywords: " + searchString.toString());
+
 			return searchQuery(searchString.toString());
 		} catch (MalformedURLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SearchEngine error.", e);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SearchEngine error.", e);
 		} catch (SolrServerException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error("SearchEngine error.", e);
 		}
-		return null;
+		return Collections.emptyList();
 	}
+
 }

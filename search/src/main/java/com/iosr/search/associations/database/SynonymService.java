@@ -13,13 +13,15 @@ import org.springframework.beans.factory.InitializingBean;
 
 public class SynonymService implements InitializingBean {
 
+	private String databaseUrl;
+
 	private Map<Integer, List<String>> synonyms;
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		synonyms = new HashMap<Integer, List<String>>();
 		Class.forName("org.sqlite.JDBC");
-		Connection conn = DriverManager.getConnection("jdbc:sqlite:C:/baza/base.dat");
+		Connection conn = DriverManager.getConnection(databaseUrl);
 		Statement stat = conn.createStatement();
 		ResultSet rs = stat.executeQuery("select * from lista;");
 
@@ -65,6 +67,10 @@ public class SynonymService implements InitializingBean {
 		}
 
 		return result_list;
+	}
+
+	public void setDatabaseUrl(String databaseUrl) {
+		this.databaseUrl = databaseUrl;
 	}
 
 }

@@ -5,9 +5,9 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-	
+
 	<annotation-driven />
-	
+
 	<context:component-scan base-package="com.iosr.search" />
 
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
@@ -31,29 +31,39 @@
 		</beans:property>
 	</beans:bean>
 
+	<beans:bean
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<beans:property name="location" value="/WEB-INF/app.properties" />
+	</beans:bean>
+
 	<!-- Configure bean to convert JSON to POJO and vice versa -->
 	<beans:bean id="jsonMessageConverter"
 		class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
 	</beans:bean>
 
 	<!-- Search Engine bean -->
-	<beans:bean id="searchEngine" class="com.iosr.search.impl.SearchEngine"/>
+	<beans:bean id="searchEngine" class="com.iosr.search.impl.SearchEngine">
+		<beans:constructor-arg name="solrUrl" value="${solr.url}"></beans:constructor-arg>
+		<beans:constructor-arg name="pagesDirectory"
+			value="${pages.directory}"></beans:constructor-arg>
+	</beans:bean>
 
 	<!-- Associations Engine bean -->
-	<beans:bean id="associationsEngine" class="com.iosr.search.associations.AssociationsEngine"/>
+	<beans:bean id="associationsEngine"
+		class="com.iosr.search.associations.AssociationsEngine" />
 
 	<!-- Synonym Service bean (database logic) -->
-	<beans:bean id="synonymService" class="com.iosr.search.associations.database.SynonymService"/>
+	<beans:bean id="synonymService"
+		class="com.iosr.search.associations.database.SynonymService">
+		<beans:property name="databaseUrl" value="${synonym.database.path}"></beans:property>
+	</beans:bean>
 
 	<!-- Keywords Provider -->
-	<beans:bean id="keywordsProvider" class="com.iosr.search.keywords.impl.FileBasedKeywordProvider"/>
+	<beans:bean id="keywordsProvider"
+		class="com.iosr.search.keywords.impl.FileBasedKeywordProvider" />
 
-	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <beans:property name="location" value="/WEB-INF/app.properties"/>
-    </beans:bean>
-	
 	<beans:bean id="declinationService" class="com.iosr.search.keywords.DeclinationService">
-		<beans:property name="filePath" value="${declination.path}"/>
+		<beans:property name="filePath" value="${declination.path}" />
 	</beans:bean>
 
 </beans:beans>
