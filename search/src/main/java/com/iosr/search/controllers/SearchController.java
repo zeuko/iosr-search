@@ -40,12 +40,6 @@ public class SearchController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String handleHomePageRequest(Model model, @RequestParam(value="search-input", required=false) String search) {
-		try {
-			if (search != null) System.out.println(URLDecoder.decode(search,"UTF-8"));
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		logger.info("Request to \"/search\"" + (search == null ? "." : " with phrase: "+ search + "."));
 		if (search == null) {
 			return "search";
