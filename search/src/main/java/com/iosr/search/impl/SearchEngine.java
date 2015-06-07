@@ -148,6 +148,9 @@ public class SearchEngine implements SearchEngineInterface {
 
 	@Override
 	public List<SearchResult> searchForKeyword(String keyword) {
+		if (keyword == null || keyword.trim().isEmpty()) {
+			return Collections.emptyList();
+		}
 		try {
 			return searchQuery(keyword);
 		} catch (MalformedURLException e) {
@@ -157,7 +160,7 @@ public class SearchEngine implements SearchEngineInterface {
 		} catch (SolrServerException e) {
 			logger.error("SearchEngine error.", e);
 		}
-		return null;
+		return Collections.emptyList();
 	}
 
 	@Override
