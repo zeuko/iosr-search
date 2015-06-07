@@ -1,5 +1,7 @@
 package com.iosr.search.controllers;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.Collection;
 import java.util.List;
 
@@ -38,7 +40,6 @@ public class SearchController {
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String handleHomePageRequest(Model model, @RequestParam(value="search-input", required=false) String search) {
-		
 		logger.info("Request to \"/search\"" + (search == null ? "." : " with phrase: "+ search + "."));
 		if (search == null) {
 			return "search";

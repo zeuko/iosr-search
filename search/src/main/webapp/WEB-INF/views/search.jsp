@@ -1,6 +1,7 @@
- <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ page language="Java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ page import="com.iosr.search.keywords.Keyword"%>
 <%@ page import="java.util.List"%>
 <%@ page session="false"%>
@@ -9,7 +10,7 @@
 <head>
 <title>Smart Search Engine</title>
 <meta charset="utf-8" />
-
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <link rel="stylesheet" href="<c:url value="/resources/view/css/foundation.css"/>" />
@@ -37,7 +38,7 @@
 		<aside class="large-6 columns">
 			<div class="panel">
 				<div>
-					<form method="get">
+					<form method="get" accept-charset="UTF-8">
 						<div class="small-8">
 							<input type="text" name="search-input">
 						</div>
